@@ -132,9 +132,8 @@ class BaseTool(ABC, BaseModel, metaclass=ToolMetaclass):
     def args(self) -> dict:
         if self.args_schema is not None:
             return self.args_schema.schema()["properties"]
-        else:
-            inferred_model = validate_arguments(self._run).model  # type: ignore
-            return get_filtered_args(inferred_model, self._run)
+        inferred_model = validate_arguments(self._run).model  # type: ignore
+        return get_filtered_args(inferred_model, self._run)
 
     def _parse_input(
         self,
@@ -142,12 +141,11 @@ class BaseTool(ABC, BaseModel, metaclass=ToolMetaclass):
     ) -> None:
         """Convert tool input to pydantic model."""
         input_args = self.args_schema
-        if isinstance(tool_input, str):
-            if input_args is not None:
+        if input_args is not None:
+            if isinstance(tool_input, str):
                 key_ = next(iter(input_args.__fields__.keys()))
                 input_args.validate({key_: tool_input})
-        else:
-            if input_args is not None:
+            else:
                 input_args.validate(tool_input)
 
     @validator("callback_manager", pre=True, always=True)
@@ -186,10 +184,7 @@ class BaseTool(ABC, BaseModel, metaclass=ToolMetaclass):
     ) -> str:
         """Run the tool."""
         self._parse_input(tool_input)
-        if not self.verbose and verbose is not None:
-            verbose_ = verbose
-        else:
-            verbose_ = self.verbose
+        verbose_ = self.verbose if self.verbose or verbose is None else verbose
         self.callback_manager.on_tool_start(
             {"name": self.name, "description": self.description},
             tool_input if isinstance(tool_input, str) else str(tool_input),
@@ -218,10 +213,7 @@ class BaseTool(ABC, BaseModel, metaclass=ToolMetaclass):
     ) -> Any:
         """Run the tool asynchronously."""
         self._parse_input(tool_input)
-        if not self.verbose and verbose is not None:
-            verbose_ = verbose
-        else:
-            verbose_ = self.verbose
+        verbose_ = self.verbose if self.verbose or verbose is None else verbose
         if self.callback_manager.is_async:
             await self.callback_manager.on_tool_start(
                 {"name": self.name, "description": self.description},

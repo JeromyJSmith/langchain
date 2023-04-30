@@ -91,10 +91,7 @@ class BaseTracer(BaseCallbackHandler, ABC):
         self._execution_order += 1
 
         if self._stack:
-            if not (
-                isinstance(self._stack[-1], ChainRun)
-                or isinstance(self._stack[-1], ToolRun)
-            ):
+            if not (isinstance(self._stack[-1], (ChainRun, ToolRun))):
                 raise TracerException(
                     f"Nested {run.__class__.__name__} can only be"
                     f" logged inside a ChainRun or ToolRun"

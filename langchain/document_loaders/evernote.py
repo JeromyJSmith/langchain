@@ -14,8 +14,7 @@ from langchain.document_loaders.base import BaseLoader
 def _parse_content(content: str) -> str:
     from pypandoc import convert_text
 
-    text = convert_text(content, "org", format="html")
-    return text
+    return convert_text(content, "org", format="html")
 
 
 def _parse_resource(resource: list) -> dict:
@@ -41,7 +40,7 @@ def _parse_note(note: List) -> dict:
             note_dict["content-raw"] = elem.text
         elif elem.tag == "resource":
             resources.append(_parse_resource(elem))
-        elif elem.tag == "created" or elem.tag == "updated":
+        elif elem.tag in ["created", "updated"]:
             note_dict[elem.tag] = strptime(elem.text, "%Y%m%dT%H%M%SZ")
         else:
             note_dict[elem.tag] = elem.text
@@ -61,11 +60,11 @@ def _parse_note_xml(xml_file: str) -> str:
     context = etree.iterparse(
         xml_file, encoding="utf-8", strip_cdata=False, huge_tree=True, recover=True
     )
-    result_string = ""
-    for action, elem in context:
-        if elem.tag == "note":
-            result_string += _parse_note(elem)["content"]
-    return result_string
+    return "".join(
+        _parse_note(elem)["content"]
+        for action, elem in context
+        if elem.tag == "note"
+    )
 
 
 class EverNoteLoader(BaseLoader):

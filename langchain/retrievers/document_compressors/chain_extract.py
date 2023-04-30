@@ -25,9 +25,7 @@ class NoOutputParser(BaseOutputParser[str]):
 
     def parse(self, text: str) -> str:
         cleaned_text = text.strip()
-        if cleaned_text == self.no_output_str:
-            return ""
-        return cleaned_text
+        return "" if cleaned_text == self.no_output_str else cleaned_text
 
 
 def _get_default_chain_prompt() -> PromptTemplate:

@@ -53,7 +53,7 @@ class WeaviateHybridSearchRetriever(BaseRetriever):
 
         with self._client.batch as batch:
             ids = []
-            for i, doc in enumerate(docs):
+            for doc in docs:
                 metadata = doc.metadata or {}
                 data_properties = {self._text_key: doc.page_content, **metadata}
                 _id = get_valid_uuid(uuid4())

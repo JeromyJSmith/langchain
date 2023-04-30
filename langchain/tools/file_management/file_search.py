@@ -48,7 +48,7 @@ class FileSearchTool(BaseFileTool):
             else:
                 return f"No files found for pattern {pattern} in directory {dir_path}"
         except Exception as e:
-            return "Error: " + str(e)
+            return f"Error: {str(e)}"
 
     async def _arun(self, dir_path: str, pattern: str) -> str:
         # TODO: Add aiofiles method

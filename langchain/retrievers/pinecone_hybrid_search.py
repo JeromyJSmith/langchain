@@ -9,7 +9,7 @@ from langchain.schema import BaseRetriever, Document
 
 
 def hash_text(text: str) -> str:
-    return str(hashlib.sha256(text.encode("utf-8")).hexdigest())
+    return hashlib.sha256(text.encode("utf-8")).hexdigest()
 
 
 def create_index(
@@ -47,20 +47,17 @@ def create_index(
         for s in sparse_embeds:
             s["values"] = [float(s1) for s1 in s["values"]]
 
-        vectors = []
-        # loop through the data and create dictionaries for upserts
-        for doc_id, sparse, dense, metadata in zip(
-            batch_ids, sparse_embeds, dense_embeds, meta
-        ):
-            vectors.append(
-                {
-                    "id": doc_id,
-                    "sparse_values": sparse,
-                    "values": dense,
-                    "metadata": metadata,
-                }
+        vectors = [
+            {
+                "id": doc_id,
+                "sparse_values": sparse,
+                "values": dense,
+                "metadata": metadata,
+            }
+            for doc_id, sparse, dense, metadata in zip(
+                batch_ids, sparse_embeds, dense_embeds, meta
             )
-
+        ]
         # upload the documents to the new hybrid index
         index.upsert(vectors)
 
@@ -112,11 +109,10 @@ class PineconeHybridSearchRetriever(BaseRetriever, BaseModel):
             top_k=self.top_k,
             include_metadata=True,
         )
-        final_result = []
-        for res in result["matches"]:
-            final_result.append(Document(page_content=res["metadata"]["context"]))
-        # return search results as json
-        return final_result
+        return [
+            Document(page_content=res["metadata"]["context"])
+            for res in result["matches"]
+        ]
 
     async def aget_relevant_documents(self, query: str) -> List[Document]:
         raise NotImplementedError

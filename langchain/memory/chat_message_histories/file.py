@@ -30,11 +30,10 @@ class FileChatMessageHistory(BaseChatMessageHistory):
             self.file_path.write_text(json.dumps([]))
 
     @property
-    def messages(self) -> List[BaseMessage]:  # type: ignore
+    def messages(self) -> List[BaseMessage]:    # type: ignore
         """Retrieve the messages from the local file"""
         items = json.loads(self.file_path.read_text())
-        messages = messages_from_dict(items)
-        return messages
+        return messages_from_dict(items)
 
     def add_user_message(self, message: str) -> None:
         self.append(HumanMessage(content=message))

@@ -192,14 +192,11 @@ class ConversationEntityMemory(BaseChatMemory):
             entities = []
         else:
             entities = [w.strip() for w in output.split(",")]
-        entity_summaries = {}
-        for entity in entities:
-            entity_summaries[entity] = self.entity_store.get(entity, "")
+        entity_summaries = {
+            entity: self.entity_store.get(entity, "") for entity in entities
+        }
         self.entity_cache = entities
-        if self.return_messages:
-            buffer: Any = self.buffer[-self.k * 2 :]
-        else:
-            buffer = buffer_string
+        buffer = self.buffer[-self.k * 2 :] if self.return_messages else buffer_string
         return {
             self.chat_history_key: buffer,
             "entities": entity_summaries,

@@ -45,7 +45,7 @@ class CombiningOutputParser(BaseOutputParser):
     def parse(self, text: str) -> Dict[str, Any]:
         """Parse the output of an LLM call."""
         texts = text.split("\n\n")
-        output = dict()
+        output = {}
         for i, parser in enumerate(self.parsers):
-            output.update(parser.parse(texts[i].strip()))
+            output |= parser.parse(texts[i].strip())
         return output

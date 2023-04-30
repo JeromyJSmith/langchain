@@ -17,6 +17,6 @@ class SelfAskOutputParser(AgentOutputParser):
 
         after_colon = text.split(":")[-1]
 
-        if " " == after_colon[0]:
+        if after_colon[0] == " ":
             after_colon = after_colon[1:]
         return AgentAction("Intermediate Answer", after_colon, text)

@@ -380,7 +380,7 @@ class Qdrant(VectorStore):
         )
 
     def _qdrant_filter_from_dict(self, filter: Optional[MetadataFilter]) -> Any:
-        if filter is None or 0 == len(filter):
+        if filter is None or len(filter) == 0:
             return None
 
         from qdrant_client.http import models as rest

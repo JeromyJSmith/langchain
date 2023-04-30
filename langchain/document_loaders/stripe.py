@@ -28,10 +28,10 @@ def _stringify_value(val: Any) -> str:
 
 
 def _stringify_dict(data: dict) -> str:
-    text = ""
-    for key, value in data.items():
-        text += key + ": " + _stringify_value(value) + "\n"
-    return text
+    return "".join(
+        f"{key}: {_stringify_value(value)}" + "\n"
+        for key, value in data.items()
+    )
 
 
 class StripeLoader(BaseLoader):
@@ -51,9 +51,7 @@ class StripeLoader(BaseLoader):
 
     def _get_resource(self) -> List[Document]:
         endpoint = STRIPE_ENDPOINTS.get(self.resource)
-        if endpoint is None:
-            return []
-        return self._make_request(endpoint)
+        return [] if endpoint is None else self._make_request(endpoint)
 
     def load(self) -> List[Document]:
         return self._get_resource()
