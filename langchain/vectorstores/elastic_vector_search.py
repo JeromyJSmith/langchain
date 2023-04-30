@@ -204,8 +204,7 @@ class ElasticVectorSearch(VectorStore, ABC):
             List of Documents most similar to the query.
         """
         docs_and_scores = self.similarity_search_with_score(query, k, filter=filter)
-        documents = [d[0] for d in docs_and_scores]
-        return documents
+        return [d[0] for d in docs_and_scores]
 
     def similarity_search_with_score(
         self, query: str, k: int = 4, filter: Optional[dict] = None, **kwargs: Any
@@ -220,8 +219,8 @@ class ElasticVectorSearch(VectorStore, ABC):
         embedding = self.embedding.embed_query(query)
         script_query = _default_script_query(embedding, filter)
         response = self.client.search(index=self.index_name, query=script_query, size=k)
-        hits = [hit for hit in response["hits"]["hits"]]
-        docs_and_scores = [
+        hits = list(response["hits"]["hits"])
+        return [
             (
                 Document(
                     page_content=hit["_source"]["text"],
@@ -231,7 +230,6 @@ class ElasticVectorSearch(VectorStore, ABC):
             )
             for hit in hits
         ]
-        return docs_and_scores
 
     @classmethod
     def from_texts(

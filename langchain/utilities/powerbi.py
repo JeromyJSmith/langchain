@@ -80,10 +80,7 @@ class PowerBIDataset(BaseModel):
         if not token:
             raise ClientAuthenticationError("No credential or token supplied.")
 
-        return {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer " + token,
-        }
+        return {"Content-Type": "application/json", "Authorization": f"Bearer {token}"}
 
     def get_table_names(self) -> Iterable[str]:
         """Get names of tables available."""
@@ -201,18 +198,16 @@ class PowerBIDataset(BaseModel):
         )
         if self.aiosession:
             async with self.aiosession.post(
-                self.request_url, headers=self.headers, json=json_content, timeout=10
-            ) as response:
+                        self.request_url, headers=self.headers, json=json_content, timeout=10
+                    ) as response:
                 response.raise_for_status()
-                response_json = await response.json()
-                return response_json
+                return await response.json()
         async with aiohttp.ClientSession() as session:
             async with session.post(
-                self.request_url, headers=self.headers, json=json_content, timeout=10
-            ) as response:
+                        self.request_url, headers=self.headers, json=json_content, timeout=10
+                    ) as response:
                 response.raise_for_status()
-                response_json = await response.json()
-                return response_json
+                return await response.json()
 
 
 def json_to_md(

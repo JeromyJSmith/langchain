@@ -193,8 +193,7 @@ class FAISS(VectorStore):
             List of Documents most similar to the query and score for each
         """
         embedding = self.embedding_function(query)
-        docs = self.similarity_search_with_score_by_vector(embedding, k)
-        return docs
+        return self.similarity_search_with_score_by_vector(embedding, k)
 
     def similarity_search_by_vector(
         self, embedding: List[float], k: int = 4, **kwargs: Any
@@ -297,10 +296,9 @@ class FAISS(VectorStore):
             List of Documents selected by maximal marginal relevance.
         """
         embedding = self.embedding_function(query)
-        docs = self.max_marginal_relevance_search_by_vector(
+        return self.max_marginal_relevance_search_by_vector(
             embedding, k, fetch_k, lambda_mult=lambda_mult
         )
-        return docs
 
     def merge_from(self, target: FAISS) -> None:
         """Merge another FAISS object with the current one.

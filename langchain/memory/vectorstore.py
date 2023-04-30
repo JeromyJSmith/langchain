@@ -44,10 +44,11 @@ class VectorStoreRetrieverMemory(BaseMemory):
         query = inputs[input_key]
         docs = self.retriever.get_relevant_documents(query)
         result: Union[List[Document], str]
-        if not self.return_docs:
-            result = "\n".join([doc.page_content for doc in docs])
-        else:
-            result = docs
+        result = (
+            docs
+            if self.return_docs
+            else "\n".join([doc.page_content for doc in docs])
+        )
         return {self.memory_key: result}
 
     def _form_documents(

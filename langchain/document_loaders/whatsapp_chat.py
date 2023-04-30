@@ -32,11 +32,10 @@ class WhatsAppChatLoader(BaseLoader):
             r"(.*?): (.*)"
         )
         for line in lines:
-            result = re.match(
+            if result := re.match(
                 message_line_regex,
                 line.strip(),
-            )
-            if result:
+            ):
                 date, sender, text = result.groups()
                 text_content += concatenate_rows(date, sender, text)
 

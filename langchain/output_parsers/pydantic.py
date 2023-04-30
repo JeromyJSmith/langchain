@@ -15,13 +15,12 @@ class PydanticOutputParser(BaseOutputParser[T]):
 
     def parse(self, text: str) -> T:
         try:
-            # Greedy search for 1st json candidate.
-            match = re.search(
+            if match := re.search(
                 "\{.*\}", text.strip(), re.MULTILINE | re.IGNORECASE | re.DOTALL
-            )
-            json_str = ""
-            if match:
+            ):
                 json_str = match.group()
+            else:
+                json_str = ""
             json_object = json.loads(json_str)
             return self.pydantic_object.parse_obj(json_object)
 

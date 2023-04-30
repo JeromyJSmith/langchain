@@ -24,9 +24,7 @@ class VespaRetriever(BaseRetriever):
 
         if not str(response.status_code).startswith("2"):
             raise RuntimeError(
-                "Could not retrieve data from Vespa. Error code: {}".format(
-                    response.status_code
-                )
+                f"Could not retrieve data from Vespa. Error code: {response.status_code}"
             )
 
         root = response.json["root"]

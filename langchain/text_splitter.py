@@ -69,10 +69,7 @@ class TextSplitter(BaseDocumentTransformer, ABC):
     def _join_docs(self, docs: List[str], separator: str) -> Optional[str]:
         text = separator.join(docs)
         text = text.strip()
-        if text == "":
-            return None
-        else:
-            return text
+        return text if text else None
 
     def _merge_splits(self, splits: Iterable[str], separator: str) -> List[str]:
         # We now want to combine these smaller pieces into medium size
@@ -85,7 +82,7 @@ class TextSplitter(BaseDocumentTransformer, ABC):
         for d in splits:
             _len = self._length_function(d)
             if (
-                total + _len + (separator_len if len(current_doc) > 0 else 0)
+                total + _len + (separator_len if current_doc else 0)
                 > self._chunk_size
             ):
                 if total > self._chunk_size:
@@ -93,15 +90,16 @@ class TextSplitter(BaseDocumentTransformer, ABC):
                         f"Created a chunk of size {total}, "
                         f"which is longer than the specified {self._chunk_size}"
                     )
-                if len(current_doc) > 0:
+                if current_doc:
                     doc = self._join_docs(current_doc, separator)
                     if doc is not None:
                         docs.append(doc)
                     # Keep on popping if:
                     # - we have a larger chunk than in the chunk overlap
                     # - or if we still have any chunks and the length is long
-                    while total > self._chunk_overlap or (
-                        total + _len + (separator_len if len(current_doc) > 0 else 0)
+                    while (
+                        total > self._chunk_overlap
+                        or total + _len + (separator_len if current_doc else 0)
                         > self._chunk_size
                         and total > 0
                     ):
@@ -197,10 +195,7 @@ class CharacterTextSplitter(TextSplitter):
     def split_text(self, text: str) -> List[str]:
         """Split incoming text and return chunks."""
         # First we naively split the large input into a bunch of smaller ones.
-        if self._separator:
-            splits = text.split(self._separator)
-        else:
-            splits = list(text)
+        splits = text.split(self._separator) if self._separator else list(text)
         return self._merge_splits(splits, self._separator)
 
 
@@ -278,10 +273,7 @@ class RecursiveCharacterTextSplitter(TextSplitter):
                 separator = _s
                 break
         # Now that we have the separator, split the text
-        if separator:
-            splits = text.split(separator)
-        else:
-            splits = list(text)
+        splits = text.split(separator) if separator else list(text)
         # Now go merging things, recursively splitting longer texts.
         _good_splits = []
         for s in splits:

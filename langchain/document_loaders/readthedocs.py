@@ -49,10 +49,7 @@ class ReadTheDocsLoader(BaseLoader):
             if len(text) == 0:
                 text = soup.find_all("div", {"role": "main"})
 
-            if len(text) != 0:
-                text = text[0].get_text()
-            else:
-                text = ""
+            text = text[0].get_text() if len(text) != 0 else ""
             return "\n".join([t for t in text.split("\n") if t])
 
         docs = []

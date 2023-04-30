@@ -77,8 +77,7 @@ class SelfQueryRetriever(BaseRetriever, BaseModel):
             structured_query
         )
         search_kwargs = {**self.search_kwargs, **new_kwargs}
-        docs = self.vectorstore.search(query, self.search_type, **search_kwargs)
-        return docs
+        return self.vectorstore.search(query, self.search_type, **search_kwargs)
 
     async def aget_relevant_documents(self, query: str) -> List[Document]:
         raise NotImplementedError

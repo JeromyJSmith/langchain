@@ -242,7 +242,7 @@ def __get_painless_scripting_source(
     if space_type == "cosineSimilarity":
         return source_value
     else:
-        return "1/" + source_value
+        return f"1/{source_value}"
 
 
 def _default_painless_scripting_query(
@@ -271,9 +271,7 @@ def _default_painless_scripting_query(
 
 def _get_kwargs_value(kwargs: Any, key: str, default_value: Any) -> Any:
     """Get the value of the key if present. Else get the default_value."""
-    if key in kwargs:
-        return kwargs.get(key)
-    return default_value
+    return kwargs.get(key) if key in kwargs else default_value
 
 
 class OpenSearchVectorSearch(VectorStore):
@@ -455,7 +453,7 @@ class OpenSearchVectorSearch(VectorStore):
 
         response = self.client.search(index=self.index_name, body=search_query)
         hits = [hit["_source"] for hit in response["hits"]["hits"][:k]]
-        documents = [
+        return [
             Document(
                 page_content=hit[text_field],
                 metadata=hit
@@ -464,7 +462,6 @@ class OpenSearchVectorSearch(VectorStore):
             )
             for hit in hits
         ]
-        return documents
 
     @classmethod
     def from_texts(

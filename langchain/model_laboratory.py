@@ -36,9 +36,8 @@ class ModelLaboratory:
                     "Currently only support chains with one output variable, "
                     f"got {chain.output_keys}"
                 )
-        if names is not None:
-            if len(names) != len(chains):
-                raise ValueError("Length of chains does not match length of names.")
+        if names is not None and len(names) != len(chains):
+            raise ValueError("Length of chains does not match length of names.")
         self.chains = chains
         chain_range = [str(i) for i in range(len(self.chains))]
         self.chain_colors = get_color_mapping(chain_range)
@@ -73,10 +72,7 @@ class ModelLaboratory:
         """
         print(f"\033[1mInput:\033[0m\n{text}\n")
         for i, chain in enumerate(self.chains):
-            if self.names is not None:
-                name = self.names[i]
-            else:
-                name = str(chain)
+            name = self.names[i] if self.names is not None else str(chain)
             print_text(name, end="\n")
             output = chain.run(text)
             print_text(output, color=self.chain_colors[str(i)], end="\n\n")

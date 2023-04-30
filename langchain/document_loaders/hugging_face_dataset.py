@@ -72,7 +72,7 @@ class HuggingFaceDatasetLoader(BaseLoader):
             num_proc=self.num_proc,
         )
 
-        docs = [
+        return [
             Document(
                 page_content=row.pop(self.page_content_column),
                 metadata=row,
@@ -80,5 +80,3 @@ class HuggingFaceDatasetLoader(BaseLoader):
             for key in dataset.keys()
             for row in dataset[key]
         ]
-
-        return docs

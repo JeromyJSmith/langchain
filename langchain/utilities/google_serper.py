@@ -60,25 +60,26 @@ class GoogleSerperAPIWrapper(BaseModel):
         if results.get("knowledgeGraph"):
             kg = results.get("knowledgeGraph", {})
             title = kg.get("title")
-            entity_type = kg.get("type")
-            if entity_type:
+            if entity_type := kg.get("type"):
                 snippets.append(f"{title}: {entity_type}.")
-            description = kg.get("description")
-            if description:
+            if description := kg.get("description"):
                 snippets.append(description)
-            for attribute, value in kg.get("attributes", {}).items():
-                snippets.append(f"{title} {attribute}: {value}.")
-
+            snippets.extend(
+                f"{title} {attribute}: {value}."
+                for attribute, value in kg.get("attributes", {}).items()
+            )
         for result in results["organic"][: self.k]:
             if "snippet" in result:
                 snippets.append(result["snippet"])
-            for attribute, value in result.get("attributes", {}).items():
-                snippets.append(f"{attribute}: {value}.")
-
-        if len(snippets) == 0:
-            return "No good Google Search Result was found"
-
-        return " ".join(snippets)
+            snippets.extend(
+                f"{attribute}: {value}."
+                for attribute, value in result.get("attributes", {}).items()
+            )
+        return (
+            " ".join(snippets)
+            if snippets
+            else "No good Google Search Result was found"
+        )
 
     def _google_serper_search_results(self, search_term: str, gl: str, hl: str) -> dict:
         headers = {
@@ -90,5 +91,4 @@ class GoogleSerperAPIWrapper(BaseModel):
             "https://google.serper.dev/search", headers=headers, params=params
         )
         response.raise_for_status()
-        search_results = response.json()
-        return search_results
+        return response.json()

@@ -18,10 +18,10 @@ def _stringify_value(val: Any) -> str:
 
 
 def _stringify_dict(data: dict) -> str:
-    text = ""
-    for key, value in data.items():
-        text += key + ": " + _stringify_value(data[key]) + "\n"
-    return text
+    return "".join(
+        f"{key}: {_stringify_value(value)}" + "\n"
+        for key, value in data.items()
+    )
 
 
 class AirbyteJSONLoader(BaseLoader):

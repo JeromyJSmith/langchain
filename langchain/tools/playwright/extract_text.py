@@ -39,7 +39,7 @@ class ExtractTextTool(BaseBrowserTool):
         # Parse the HTML content with BeautifulSoup
         soup = BeautifulSoup(html_content, "lxml")
 
-        return " ".join(text for text in soup.stripped_strings)
+        return " ".join(soup.stripped_strings)
 
     async def _arun(self) -> str:
         """Use the tool."""
@@ -54,4 +54,4 @@ class ExtractTextTool(BaseBrowserTool):
         # Parse the HTML content with BeautifulSoup
         soup = BeautifulSoup(html_content, "lxml")
 
-        return " ".join(text for text in soup.stripped_strings)
+        return " ".join(soup.stripped_strings)

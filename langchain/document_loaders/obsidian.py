@@ -29,19 +29,20 @@ class ObsidianLoader(BaseLoader):
         if match:
             lines = match.group(1).split("\n")
             for line in lines:
-                if ":" in line:
-                    key, value = line.split(":", 1)
-                    front_matter[key.strip()] = value.strip()
-                else:
+                if ":" not in line:
                     # Skip lines without a colon
                     continue
+                key, value = line.split(":", 1)
+                front_matter[key.strip()] = value.strip()
         return front_matter
 
     def _remove_front_matter(self, content: str) -> str:
         """Remove front matter metadata from the given content."""
-        if not self.collect_metadata:
-            return content
-        return self.FRONT_MATTER_REGEX.sub("", content)
+        return (
+            self.FRONT_MATTER_REGEX.sub("", content)
+            if self.collect_metadata
+            else content
+        )
 
     def load(self) -> List[Document]:
         """Load documents."""

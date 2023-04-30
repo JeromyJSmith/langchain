@@ -114,8 +114,7 @@ class GenerativeAgentMemory(BaseMemory):
         score = self.chain(prompt).run(memory_content=memory_content).strip()
         if self.verbose:
             logger.info(f"Importance score: {score}")
-        match = re.search(r"^\D*(\d+)", score)
-        if match:
+        if match := re.search(r"^\D*(\d+)", score):
             return (float(score[0]) / 10) * self.importance_weight
         else:
             return 0.0
@@ -202,9 +201,7 @@ class GenerativeAgentMemory(BaseMemory):
 
     def save_context(self, inputs: Dict[str, Any], outputs: Dict[str, str]) -> None:
         """Save the context of this model run to memory."""
-        # TODO: fix the save memory key
-        mem = outputs.get(self.add_memory_key)
-        if mem:
+        if mem := outputs.get(self.add_memory_key):
             self.add_memory(mem)
 
     def clear(self) -> None:

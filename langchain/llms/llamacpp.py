@@ -215,17 +215,13 @@ class LlamaCpp(LLM):
                 llm("This is a prompt.")
         """
         if self.streaming:
-            # If streaming is enabled, we use the stream
-            # method that yields as they are generated
-            # and return the combined strings from the first choices's text:
-            combined_text_output = ""
-            for token in self.stream(prompt=prompt, stop=stop):
-                combined_text_output += token["choices"][0]["text"]
-            return combined_text_output
-        else:
-            params = self._get_parameters(stop)
-            result = self.client(prompt=prompt, **params)
-            return result["choices"][0]["text"]
+            return "".join(
+                token["choices"][0]["text"]
+                for token in self.stream(prompt=prompt, stop=stop)
+            )
+        params = self._get_parameters(stop)
+        result = self.client(prompt=prompt, **params)
+        return result["choices"][0]["text"]
 
     def stream(
         self, prompt: str, stop: Optional[List[str]] = None

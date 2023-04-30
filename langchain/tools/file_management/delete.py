@@ -32,7 +32,7 @@ class DeleteFileTool(BaseFileTool):
             os.remove(file_path_)
             return f"File deleted successfully: {file_path}."
         except Exception as e:
-            return "Error: " + str(e)
+            return f"Error: {str(e)}"
 
     async def _arun(self, file_path: str) -> str:
         # TODO: Add aiofiles method

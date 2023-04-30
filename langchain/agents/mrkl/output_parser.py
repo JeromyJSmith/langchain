@@ -24,6 +24,6 @@ class MRKLOutputParser(AgentOutputParser):
         match = re.search(regex, text, re.DOTALL)
         if not match:
             raise OutputParserException(f"Could not parse LLM output: `{text}`")
-        action = match.group(1).strip()
-        action_input = match.group(2)
+        action = match[1].strip()
+        action_input = match[2]
         return AgentAction(action, action_input.strip(" ").strip('"'), text)

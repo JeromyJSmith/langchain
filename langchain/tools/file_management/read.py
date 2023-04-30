@@ -32,7 +32,7 @@ class ReadFileTool(BaseFileTool):
                 content = f.read()
             return content
         except Exception as e:
-            return "Error: " + str(e)
+            return f"Error: {str(e)}"
 
     async def _arun(self, file_path: str) -> str:
         # TODO: Add aiofiles method
