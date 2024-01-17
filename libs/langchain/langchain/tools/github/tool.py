@@ -24,7 +24,7 @@ class GitHubAction(BaseTool):
     name: str = ""
     description: str = ""
 
-    def _run(
+    def _run_with_error_handling_with_env_check(
         self,
         instructions: str,
         run_manager: Optional[CallbackManagerForToolRun] = None,
