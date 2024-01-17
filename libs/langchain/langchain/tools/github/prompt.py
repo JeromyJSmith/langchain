@@ -33,9 +33,13 @@ CREATE_FILE_PROMPT = """
 This tool is a wrapper for the GitHub API, useful when you need to create a file in a GitHub repository. **VERY IMPORTANT**: Your input to this tool MUST strictly follow these rules:
 
 - First you must specify which file to create by passing a full file path (**IMPORTANT**: the path must not start with a slash)
+- First you must specify which file to create by passing a full file path (**IMPORTANT**: the path must not start with a slash)
 - Then you must specify the contents of the file
 
-For example, if you would like to create a file called /test/test.txt with contents "test contents", you would pass in the following string:
+**IMPORTANT**: Your input to this tool MUST strictly follow these rules:
+
+For example, if you would like to create a file called /test/test.txt with contents "- Your input should strictly follow the format: First specify the file path without a leading slash, followed by two newlines and then the contents of the file.
+- Then you can enter the contents of the file", you would pass in the following string:
 
 test/test.txt
 
