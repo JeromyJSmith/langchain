@@ -8,7 +8,7 @@ This tool will fetch the title, body, and comment thread of a specific issue. Pl
 """
 
 COMMENT_ON_ISSUE_PROMPT = """
-This tool is useful when you need to comment on a GitHub issue. Simply pass in the issue number and the comment you would like to make. Please use this sparingly as we don't want to clutter the comment threads. **VERY IMPORTANT**: Your input to this tool MUST strictly follow these rules:
+This tool is useful when you need to comment on a GitHub issue. Simply pass in the issue number and the comment you would like to make. **VERY IMPORTANT**: Your input to this tool MUST strictly follow these rules:\n\n- First you must specify the issue number as an integer\n\n- Then you must place two newlines\n\n- Then you must specify your comment
 
 - First you must specify the issue number as an integer
 - Then you must place two newlines
