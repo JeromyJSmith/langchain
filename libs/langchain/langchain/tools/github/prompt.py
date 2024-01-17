@@ -4,7 +4,7 @@ This tool will fetch a list of the repository's issues. It will return the title
 """
 
 GET_ISSUE_PROMPT = """
-This tool will fetch the title, body, and comment thread of a specific issue. **VERY IMPORTANT**: You must specify the issue number as an integer.
+This tool will fetch the title, body, and comment thread of a specific issue. Please ensure to provide the issue number as an integer. **VERY IMPORTANT**: You must specify the issue number as an integer. **VERY IMPORTANT**: You must specify the issue number as an integer.
 """
 
 COMMENT_ON_ISSUE_PROMPT = """
