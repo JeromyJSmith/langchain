@@ -70,6 +70,6 @@ new contents
 >>>> NEW
 """
 
-DELETE_FILE_PROMPT = """
+DELETE_FILE_PROMPT = "This tool is a wrapper for the GitHub API, useful when you need to delete a file in a GitHub repository. **VERY IMPORTANT**: Your input to this tool MUST strictly follow these rules:\n- First you must specify the file path of the file to delete by passing a full file path (**IMPORTANT**: the path must not start with a slash)\n**IMPORTANT**: The tool will validate that the input is a valid file path.""""
 This tool is a wrapper for the GitHub API, useful when you need to delete a file in a GitHub repository. Simply pass in the full file path of the file you would like to delete. **IMPORTANT**: the path must not start with a slash
 """
