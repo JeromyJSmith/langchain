@@ -87,6 +87,24 @@ def test_parse_issue() -> None:
             "locked": issue["locked"],
             "number": issue["number"],
             "is_pull_request": False,
+        }
+    )
+    loader = GitHubIssuesLoader(repo="repo", access_token="access_token")
+    expected_document = Document(
+        page_content=issue["body"],  # type: ignore
+        metadata={
+            "url": issue["html_url"],
+            "title": issue["title"],
+            "creator": issue["user"]["login"],  # type: ignore
+            "created_at": issue["created_at"],
+            "comments": issue["comments"],
+            "state": issue["state"],
+            "labels": [label["name"] for label in issue["labels"]],  # type: ignore
+            "assignee": issue["assignee"]["login"],  # type: ignore
+            "milestone": issue["milestone"]["title"],  # type: ignore
+            "locked": issue["locked"],
+            "number": issue["number"],
+            "is_pull_request": False,
         },
     )
     loader = GitHubIssuesLoader(repo="repo", access_token="access_token")

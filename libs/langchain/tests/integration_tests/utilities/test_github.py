@@ -16,6 +16,13 @@ def api_client() -> GitHubAPIWrapper:
 
 
 def test_get_open_issues(api_client: GitHubAPIWrapper) -> None:
-    """Basic test to fetch issues"""
-    issues = api_client.get_issues()
+    """Test to fetch open issues and verify their validity"""
+    try:
+        issues = api_client.get_issues()
+        assert issues is not None
+        assert len(issues) > 0
+    except Exception as e:
+        pytest.fail(str(e))
+    assert issues is not None
+    assert len(issues) == 5
     assert len(issues) != 0

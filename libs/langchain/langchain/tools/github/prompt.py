@@ -4,7 +4,7 @@ This tool will fetch a list of the repository's issues. It will return the title
 """
 
 GET_ISSUE_PROMPT = """
-This tool will fetch the title, body, and comment thread of a specific issue. **VERY IMPORTANT**: You must specify the issue number as an integer.
+This tool will fetch the title, body, and comment thread of a specific issue. **VERY IMPORTANT**: You must specify the issue number as an integer. Additionally, make sure to set the required environment variables `GITHUB_API_TOKEN` and `GITHUB_REPOSITORY` before running this tool.
 """
 
 COMMENT_ON_ISSUE_PROMPT = """
@@ -28,6 +28,8 @@ README updates
 
 added contributors' names, closes issue #3
 """
+Make sure to set the required environment variables `GITHUB_API_TOKEN` and `GITHUB_REPOSITORY` before running this tool.
+"""
 CREATE_FILE_PROMPT = """
 This tool is a wrapper for the GitHub API, useful when you need to create a file in a GitHub repository. **VERY IMPORTANT**: Your input to this tool MUST strictly follow these rules:
 
@@ -39,6 +41,8 @@ For example, if you would like to create a file called /test/test.txt with conte
 test/test.txt
 
 test contents
+
+Make sure to set the required environment variables `GITHUB_API_TOKEN` and `GITHUB_REPOSITORY` before running this tool.
 """
 
 READ_FILE_PROMPT = """
@@ -66,5 +70,7 @@ new contents
 """
 
 DELETE_FILE_PROMPT = """
+This tool is a wrapper for the GitHub API, useful when you need to delete a file in a GitHub repository. Simply pass in the full file path of the file you would like to delete. **IMPORTANT**: the path must not start with a slash
+"""
 This tool is a wrapper for the GitHub API, useful when you need to delete a file in a GitHub repository. Simply pass in the full file path of the file you would like to delete. **IMPORTANT**: the path must not start with a slash
 """
