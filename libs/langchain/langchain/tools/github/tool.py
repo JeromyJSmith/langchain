@@ -16,6 +16,7 @@ from langchain.tools.base import BaseTool
 from langchain.utilities.github import GitHubAPIWrapper
 
 
+import logging
 class GitHubAction(BaseTool):
     """Tool for interacting with the GitHub API."""
 
@@ -24,7 +25,7 @@ class GitHubAction(BaseTool):
     name: str = ""
     description: str = ""
 
-    def _run(
+    def _run_with_error_handling(
         self,
         instructions: str,
         run_manager: Optional[CallbackManagerForToolRun] = None,

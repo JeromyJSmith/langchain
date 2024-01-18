@@ -34,7 +34,7 @@ This tool is a wrapper for the GitHub API, useful when you need to create a file
 - First you must specify which file to create by passing a full file path (**IMPORTANT**: the path must not start with a slash)
 - Then you must specify the contents of the file
 
-For example, if you would like to create a file called /test/test.txt with contents "test contents", you would pass in the following string:
+For example, if you would like to create a file called test/test.txt with contents "test contents", you would pass in the following string:
 
 test/test.txt
 
@@ -52,11 +52,11 @@ This tool is a wrapper for the GitHub API, useful when you need to update the co
 - Then you must specify the old contents which you would like to replace wrapped in OLD <<<< and >>>> OLD
 - Then you must specify the new contents which you would like to replace the old contents with wrapped in NEW <<<< and >>>> NEW
 
-For example, if you would like to replace the contents of the file /test/test.txt from "old contents" to "new contents", you would pass in the following string:
+For example, if you would like to update the contents of a file called test/test.txt from "old contents" to "new contents", you would pass in the following string:
 
 test/test.txt
 
-This is text that will not be changed
+This is the original content
 OLD <<<<
 old contents
 >>>> OLD
