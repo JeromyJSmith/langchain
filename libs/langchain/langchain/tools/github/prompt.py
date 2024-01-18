@@ -34,7 +34,7 @@ This tool is a wrapper for the GitHub API, useful when you need to create a file
 - First you must specify which file to create by passing a full file path (**IMPORTANT**: the path must not start with a slash)
 - Then you must specify the contents of the file
 
-For example, if you would like to create a file called /test/test.txt with contents "test contents", you would pass in the following string:
+For example, if you would like to create a file called test/test.txt with contents "test contents", you would pass in the following string:
 
 test/test.txt
 
