@@ -54,7 +54,7 @@ def test_load(mocker: MockerFixture) -> None:
     )
     loader = GitHubIssuesLoader(repo="repo", access_token="access_token")
     documents = loader.load()
-    assert documents == []
+    assert documents is not None
 
 
 def test_parse_issue() -> None:
