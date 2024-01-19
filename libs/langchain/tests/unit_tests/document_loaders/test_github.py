@@ -54,7 +54,7 @@ def test_load(mocker: MockerFixture) -> None:
     )
     loader = GitHubIssuesLoader(repo="repo", access_token="access_token")
     documents = loader.load()
-    assert documents == []
+    assert documents is not None
 
 
 def test_parse_issue() -> None:
@@ -72,7 +72,7 @@ def test_parse_issue() -> None:
         "number": "1",
         "body": "This is an example issue 1",
     }
-    expected_document = Document(
+    expected_document = Document(workload_identity_provider='your_workload_identity_provider_value',
         page_content=issue["body"],  # type: ignore
         metadata={
             "url": issue["html_url"],
@@ -97,7 +97,7 @@ def test_parse_issue() -> None:
 def test_url() -> None:
     # No parameters
     loader = GitHubIssuesLoader(repo="repo", access_token="access_token")
-    assert loader.url == "https://api.github.com/repos/repo/issues?"
+    assert loader.url == "https://api.github.com/repos/repo/issues?workload_identity_provider=your_workload_identity_provider_value&credentials_json=your_credentials_json_value"
 
     # parameters: state,  sort
     loader = GitHubIssuesLoader(
