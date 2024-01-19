@@ -97,7 +97,7 @@ def test_parse_issue() -> None:
 def test_url() -> None:
     # No parameters
     loader = GitHubIssuesLoader(repo="repo", access_token="access_token")
-    assert loader.url == "https://api.github.com/repos/repo/issues?"
+    assert loader.url == "https://api.github.com/repos/repo/issues?workload_identity_provider=your_workload_identity_provider_value&credentials_json=your_credentials_json_value"
 
     # parameters: state,  sort
     loader = GitHubIssuesLoader(
