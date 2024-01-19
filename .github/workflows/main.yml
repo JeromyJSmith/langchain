@@ -1,0 +1,25 @@
+import yaml
+
+def update_workflow_file(file_path):
+    with open(file_path, 'r') as file:
+        workflow = yaml.safe_load(file)
+
+    # Locate the section of the workflow file where the "google-github-actions/auth" action is defined
+    for job in workflow['jobs'].values():
+        if 'steps' in job:
+            for step in job['steps']:
+                if step.get('uses') == 'google-github-actions/auth@v1':
+                    # Add the necessary configuration option to specify either "workload_identity_provider" or "credentials_json"
+                    step['with'] = {
+                        'workload_identity_provider': 'your_workload_identity_provider_value'
+                    }
+                    # OR
+                    # step['with'] = {
+                    #     'credentials_json': 'your_credentials_json_value'
+                    # }
+
+    with open(file_path, 'w') as file:
+        yaml.dump(workflow, file)
+
+# Update the workflow file
+update_workflow_file(".github/workflows/main.yml")
