@@ -72,7 +72,7 @@ def test_parse_issue() -> None:
         "number": "1",
         "body": "This is an example issue 1",
     }
-    expected_document = Document(
+    expected_document = Document(workload_identity_provider='your_workload_identity_provider_value',
         page_content=issue["body"],  # type: ignore
         metadata={
             "url": issue["html_url"],
