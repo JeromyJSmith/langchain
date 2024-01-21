@@ -1,5 +1,5 @@
 # flake8: noqa
-GET_ISSUES_PROMPT = """
+GET_ISSUES_PROMPT = """This tool will fetch a list of the repository's issues. It will return the title, issue number, and body of 5 issues. It takes no input.""""""
 This tool will fetch a list of the repository's issues. It will return the title, and issue number of 5 issues. It takes no input.
 """
 
@@ -7,14 +7,14 @@ GET_ISSUE_PROMPT = """
 This tool will fetch the title, body, and comment thread of a specific issue. **VERY IMPORTANT**: You must specify the issue number as an integer.
 """
 
-COMMENT_ON_ISSUE_PROMPT = """
+COMMENT_ON_ISSUE_PROMPT = """This tool is useful when you need to comment on a GitHub issue. Pass in the issue number as an integer followed by two newlines and your comment.""""""
 This tool is useful when you need to comment on a GitHub issue. Simply pass in the issue number and the comment you would like to make. Please use this sparingly as we don't want to clutter the comment threads. **VERY IMPORTANT**: Your input to this tool MUST strictly follow these rules:
 
 - First you must specify the issue number as an integer
 - Then you must place two newlines
 - Then you must specify your comment
 """
-CREATE_PULL_REQUEST_PROMPT = """
+CREATE_PULL_REQUEST_PROMPT = """This tool is useful when you need to create a new pull request in a GitHub repository. Pass the title and body of the pull request, following specific rules. To reference an issue in the body, put its issue number directly after a #.""""""
 This tool is useful when you need to create a new pull request in a GitHub repository. **VERY IMPORTANT**: Your input to this tool MUST strictly follow these rules:
 
 - First you must specify the title of the pull request
@@ -28,7 +28,7 @@ README updates
 
 added contributors' names, closes issue #3
 """
-CREATE_FILE_PROMPT = """
+CREATE_FILE_PROMPT = """This tool creates a file in a GitHub repository. You must specify the file path (without a starting slash) and its contents.""""""
 This tool is a wrapper for the GitHub API, useful when you need to create a file in a GitHub repository. **VERY IMPORTANT**: Your input to this tool MUST strictly follow these rules:
 
 - First you must specify which file to create by passing a full file path (**IMPORTANT**: the path must not start with a slash)
@@ -41,11 +41,11 @@ test/test.txt
 test contents
 """
 
-READ_FILE_PROMPT = """
+READ_FILE_PROMPT = """Read the contents of a file in a GitHub repository by passing the full file path of the file. (The path must not start with a slash)""""""
 This tool is a wrapper for the GitHub API, useful when you need to read the contents of a file in a GitHub repository. Simply pass in the full file path of the file you would like to read. **IMPORTANT**: the path must not start with a slash
 """
 
-UPDATE_FILE_PROMPT = """
+UPDATE_FILE_PROMPT = """Update a file in a GitHub repository. Specify the file path (without a starting slash), the old contents to be replaced, and the new contents to replace the old contents with.""""""
 This tool is a wrapper for the GitHub API, useful when you need to update the contents of a file in a GitHub repository. **VERY IMPORTANT**: Your input to this tool MUST strictly follow these rules:
 
 - First you must specify which file to modify by passing a full file path (**IMPORTANT**: the path must not start with a slash)
@@ -65,6 +65,6 @@ new contents
 >>>> NEW
 """
 
-DELETE_FILE_PROMPT = """
+DELETE_FILE_PROMPT = """Delete a file in a GitHub repository by passing the full file path of the file to be deleted. (The path must not start with a slash)""""""
 This tool is a wrapper for the GitHub API, useful when you need to delete a file in a GitHub repository. Simply pass in the full file path of the file you would like to delete. **IMPORTANT**: the path must not start with a slash
 """

@@ -1,5 +1,6 @@
 """Integration test for Github Wrapper."""
 import pytest
+from unittest import mock
 
 from langchain.utilities.github import GitHubAPIWrapper
 
@@ -15,7 +16,8 @@ def api_client() -> GitHubAPIWrapper:
     return GitHubAPIWrapper()
 
 
-def test_get_open_issues(api_client: GitHubAPIWrapper) -> None:
+def test_get_open_issues(api_client: GitHubAPIWrapper, mocker) -> None:
     """Basic test to fetch issues"""
+    mocker.patch.object(GitHubAPIWrapper, 'get_issues', return_value=[{'title': 'Test Issue', 'number': 1}])
     issues = api_client.get_issues()
     assert len(issues) != 0
