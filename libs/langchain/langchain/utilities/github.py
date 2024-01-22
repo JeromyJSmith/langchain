@@ -31,6 +31,12 @@ class GitHubAPIWrapper(BaseModel):
     @root_validator()
     def validate_environment(cls, values: Dict) -> Dict:
         """Validate that api key and python package exists in environment."""
+        if any('github_repository' not in values, 'github_app_id' not in values, 'github_app_private_key' not in values, 'github_branch' not in values, 'github_base_branch' not in values):
+            missing_var = [var for var in ['github_repository', 'github_app_id', 'github_app_private_key', 'github_branch', 'github_base_branch'] if var not in values]
+            raise ValueError(f'Missing environment variables: {missing_var}')
+        return values
+    def validate_environment(cls, values: Dict) -> Dict:
+        """Validate that api key and python package exists in environment."""
         github_repository = get_from_dict_or_env(
             values, "github_repository", "GITHUB_REPOSITORY"
         )
