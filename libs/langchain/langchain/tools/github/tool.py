@@ -31,3 +31,16 @@ class GitHubAction(BaseTool):
     ) -> str:
         """Use the GitHub API to run an operation."""
         return self.api_wrapper.run(self.mode, instructions)
+    def _run(
+        self,
+        instructions: str,
+        run_manager: Optional[CallbackManagerForToolRun] = None,
+    ) -> str:
+        """Use the GitHub API to run an operation."""
+        try:
+            return self.api_wrapper.run(self.mode, instructions)
+        except Exception as e:
+            if "the GitHub Action workflow must specify exactly one of 'workload_identity_provider' or 'credentials_json'" in str(e):
+                raise ValueError("Missing environment variable: workload_identity_provider or credentials_json")
+            else:
+                raise e
