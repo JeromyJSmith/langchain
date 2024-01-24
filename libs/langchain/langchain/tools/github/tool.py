@@ -8,6 +8,7 @@ To use this tool, you must first set as environment variables:
 
 """
 from typing import Optional
+import logging
 
 from langchain_core.pydantic_v1 import Field
 
@@ -30,4 +31,8 @@ class GitHubAction(BaseTool):
         run_manager: Optional[CallbackManagerForToolRun] = None,
     ) -> str:
         """Use the GitHub API to run an operation."""
-        return self.api_wrapper.run(self.mode, instructions)
+        try:
+            result = self.api_wrapper.run(self.mode, instructions)
+            return result
+        except Exception as e:
+            logging.exception("An error occurred")
