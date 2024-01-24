@@ -1,5 +1,6 @@
 """GitHub Toolkit."""
 from typing import Dict, List
+import logging
 
 from langchain.agents.agent_toolkits.base import BaseToolkit
 from langchain.tools import BaseTool
@@ -14,6 +15,7 @@ from langchain.tools.github.prompt import (
     UPDATE_FILE_PROMPT,
 )
 from langchain.tools.github.tool import GitHubAction
+import logging
 from langchain.utilities.github import GitHubAPIWrapper
 
 
