@@ -30,7 +30,6 @@ const config = {
   markdown: {
     mermaid: true,
   },
-
   plugins: [
     () => ({
       name: "custom-webpack-config",
@@ -72,6 +71,9 @@ const config = {
         },
       }),
     }),
+    new ProvidePlugin({
+      process: require.resolve("process/browser"),
+    }),
   ],
 
   presets: [
@@ -84,6 +86,24 @@ const config = {
           remarkPlugins: [
             [require("@docusaurus/remark-plugin-npm2yarn"), { sync: true }],
           ],
+          async sidebarItemsGenerator({
+            defaultSidebarItemsGenerator,
+            ...args
+          }) {
+            const sidebarItems = await defaultSidebarItemsGenerator(args);
+            sidebarItems.forEach((subItem) => {
+              // This allows breaking long sidebar labels into multiple lines
+          sidebarPath: require.resolve("./sidebars.js"),
+          remarkPlugins: [
+            [require("@docusaurus/remark-plugin-npm2yarn"), { sync: true }],
+          ],
+          async sidebarItemsGenerator({
+            defaultSidebarItemsGenerator,
+            ...args
+          }) {
+            const sidebarItems = await defaultSidebarItemsGenerator(args);
+            sidebarItems.forEach((subItem) => {
+              // This allows breaking long sidebar labels into multiple lines
           async sidebarItemsGenerator({
             defaultSidebarItemsGenerator,
             ...args

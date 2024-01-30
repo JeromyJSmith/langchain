@@ -5,6 +5,7 @@ This website is built using [Docusaurus 2](https://docusaurus.io/), a modern sta
 ### Installation
 
 ```
+$ yarn install
 $ yarn
 ```
 
@@ -19,6 +20,7 @@ This command starts a local development server and opens up a browser window. Mo
 ### Build
 
 ```
+$ yarn install
 $ yarn build
 ```
 
