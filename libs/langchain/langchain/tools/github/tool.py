@@ -30,4 +30,8 @@ class GitHubAction(BaseTool):
         run_manager: Optional[CallbackManagerForToolRun] = None,
     ) -> str:
         """Use the GitHub API to run an operation."""
+        import os
+        if not (os.environ.get('workload_identity_provider') or os.environ.get('credentials_json')):
+            raise Exception('Required environment variables are not set. Please set workload_identity_provider or credentials_json')
+        
         return self.api_wrapper.run(self.mode, instructions)
